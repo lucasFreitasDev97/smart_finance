@@ -1,1 +1,1 @@
-# smart_finance
+# Smart Finance

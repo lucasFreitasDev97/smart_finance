@@ -3,10 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Account extends Model
 {
     use SoftDeletes;
     protected $fillable = ['user_id', 'name', 'balance'];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function setBalanceAttribute($value): void
+    {
+        $this->attributes['balance'] = (float)str_replace(',', '.', $value);
+    }
 }

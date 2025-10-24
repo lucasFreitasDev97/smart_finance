@@ -2,63 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
+use App\Models\User;
+use App\Services\AccountService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class AccountController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    protected AccountService $accountService;
+
+    public function __construct(AccountService $accountService)
     {
-        //
+        $this->accountService = $accountService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index(User $user): View
     {
-        //
+        $accounts = $user->accounts;
+
+        return view('accounts.index', ['accounts' => $accounts]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request, User $user): RedirectResponse
     {
-        //
+        $data = $request->all();
+        $this->accountService->store($data, $user);
+
+        return redirect()->route('accounts.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(Request $request, Account $account): RedirectResponse
     {
-        //
+        $data = $request->all();
+        $this->accountService->update($data, $account);
+        return redirect()->route('accounts.index');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function destroy(Account $account): RedirectResponse
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('accounts.index');
     }
 }

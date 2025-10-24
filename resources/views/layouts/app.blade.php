@@ -35,7 +35,7 @@
                         <a class="nav-link" href="">Transações</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Contas</a>
+                        <a class="nav-link" href="{{route('accounts.index', ['user' => auth()->user()])}}">Contas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="">Categorias</a>

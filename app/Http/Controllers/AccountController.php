@@ -47,6 +47,8 @@ class AccountController extends Controller
 
     public function destroy(Account $account): RedirectResponse
     {
-        return redirect()->route('accounts.index');
+        $user = $account->user;
+        $this->accountService->destroy($account);
+        return redirect()->route('accounts.index',['user' => $user->getKey()]);
     }
 }

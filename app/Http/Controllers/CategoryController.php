@@ -2,63 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
+use App\Models\Category;
+use App\Models\User;
+use App\Services\AccountService;
+use App\Services\CategoryService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    protected CategoryService $categoryService;
+
+    public function __construct(CategoryService $categoryService)
     {
-        //
+        $this->categoryService = $categoryService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index(User $user): View
     {
-        //
+        $categories = $user->categories;
+
+        return view('categories.index', ['categories' => $categories, ['user' => $user->getKey()]]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $data = $request->all();
+        $user = auth()->user();
+        $this->categoryService->store($data, $user);
+
+        return redirect()->route('categories.index', ['user' => $user->getKey()]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(Request $request, Category $category): RedirectResponse
     {
-        //
+        $data = $request->all();
+        $user = $category->user;
+        $this->categoryService->update($data, $category);
+        return redirect()->route('categories.index', ['user' => $user->getKey()]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function destroy(Category $category): RedirectResponse
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $user = $category->user;
+        $this->categoryService->destroy($category);
+        return redirect()->route('categories.index',['user' => $user->getKey()]);
     }
 }

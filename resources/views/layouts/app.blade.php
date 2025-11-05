@@ -38,7 +38,7 @@
                         <a class="nav-link" href="{{route('accounts.index', ['user' => auth()->user()])}}">Contas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Categorias</a>
+                        <a class="nav-link" href="{{route('categories.index', ['user' => auth()->user()])}}">Categorias</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

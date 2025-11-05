@@ -28,19 +28,21 @@ class AccountController extends Controller
         return view('accounts.index', ['accounts' => $accounts]);
     }
 
-    public function store(Request $request, User $user): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $data = $request->all();
+        $user = auth()->user();
         $this->accountService->store($data, $user);
 
-        return redirect()->route('accounts.index');
+        return redirect()->route('accounts.index', ['user' => $user->getKey()]);
     }
 
     public function update(Request $request, Account $account): RedirectResponse
     {
         $data = $request->all();
+        $user = $account->user;
         $this->accountService->update($data, $account);
-        return redirect()->route('accounts.index');
+        return redirect()->route('accounts.index', ['user' => $user->getKey()]);
     }
 
     public function destroy(Account $account): RedirectResponse

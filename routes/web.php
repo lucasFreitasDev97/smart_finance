@@ -19,7 +19,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/accounts/{user}', [AccountController::class, 'index'])->name('accounts.index');
     Route::post('/accounts/store', [AccountController::class, 'store'])->name('accounts.store');
-    Route::post('/accounts/update/{account}', [AccountController::class, 'update'])->name('accounts.update');
+    Route::put('/accounts/update/{account}', [AccountController::class, 'update'])->name('accounts.update');
     Route::get('/accounts/destroy/{account}', [AccountController::class, 'destroy'])->name('accounts.destroy');
 });
 

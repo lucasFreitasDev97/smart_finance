@@ -26,7 +26,17 @@
                             <td>{{$account->name}}</td>
                             <td class="fw-bold">R$ {{ number_format($account->balance, 2, ',', '.') }}</td>
                             <td class="text-end">
-                                <button class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil-fill"></i> Editar</button>
+                                <button
+                                    class="btn btn-sm btn-outline-primary me-1 editAccountBtn"
+                                    data-id="{{ $account->id }}"
+                                    data-name="{{ $account->name }}"
+                                    data-balance="{{ $account->balance }}"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#editAccountModal"
+                                >
+                                    <i class="bi bi-pencil-fill"></i> Editar
+                                </button>
+
                                 <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i> Excluir</button>
                             </td>
                         </tr>
@@ -39,4 +49,6 @@
     </div>
 
     @include('accounts.create-modal')
+    @include('accounts.edit-modal')
+    @include('accounts.scripts')
 @endsection

@@ -37,7 +37,9 @@
                                     <i class="bi bi-pencil-fill"></i> Editar
                                 </button>
 
-                                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i> Excluir</button>
+                                <a href="{{{route('accounts.destroy', ['account' => $account->getKey()])}}}">
+                                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i> Excluir</button>
+                                </a>
                             </td>
                         </tr>
                     @endforeach
